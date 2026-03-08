@@ -12,7 +12,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: #f0f8ff;
 }
 
 .container p {
@@ -26,6 +25,6 @@
 }
 
 .container a:hover {
-  color: #a52a2a;
+  color: var(--links);
 }
 </style>

@@ -2,6 +2,8 @@
 
 :root {
   --background_color: #1b1b1b;
+  --text-color: #f0f8ff;
+  --links: #a52a2a;
   --font-one: 'DM Sans', sans-serif;
 }
 
@@ -13,6 +15,7 @@
 
 body {
   font-family: var(--font-one);
+  color: var(--text-color);
 }
 
 a {
@@ -24,4 +27,9 @@ a {
   height: 100vh;
   width: 100vw;
   background-color: var(--background_color);
+}
+
+.err-message {
+  font-size: 0.88rem;
+  color: #ff8f8f;
 }
