@@ -14,12 +14,14 @@ function validateEmail(value) {
 
   return true
 }
+
+const model = defineModel({ type: String, default: '' })
 </script>
 
 <template>
   <div class="email-input">
     <label for="email">Email</label>
-    <Field type="email" id="email" name="email" :rules="validateEmail" />
+    <Field type="email" id="email" name="email" :rules="validateEmail" v-model="model" />
     <ErrorMessage name="email" class="err-message" />
   </div>
 </template>

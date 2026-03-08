@@ -18,12 +18,21 @@ function validateInput(value) {
 
   return true
 }
+
+const model = defineModel({ type: String, default: '' })
 </script>
 
 <template>
   <div class="input-field">
     <label :for="id">{{ label }} <span v-if="isRequired">*</span></label>
-    <Field :id="id" :name="fieldName" type="text" :rules="validateInput" isRequired="isRequired" />
+    <Field
+      :id="id"
+      :name="fieldName"
+      type="text"
+      :rules="validateInput"
+      isRequired="isRequired"
+      v-model="model"
+    />
   </div>
   <ErrorMessage :name="fieldName" class="err-message" />
 </template>

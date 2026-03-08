@@ -11,6 +11,8 @@ function togglePasswordVisibility() {
 
 const passwordFieldType = computed(() => (passwordVisible.value ? 'text' : 'password'))
 
+const model = defineModel({ type: String, default: '' })
+
 function validatePassword(value) {
   if (!value) {
     return 'Password is required'
@@ -29,7 +31,13 @@ function validatePassword(value) {
     <label for="password">Password</label>
 
     <div class="password-field">
-      <Field :type="passwordFieldType" id="password" name="password" :rules="validatePassword" />
+      <Field
+        :type="passwordFieldType"
+        id="password"
+        name="password"
+        :rules="validatePassword"
+        v-model="model"
+      />
       <button
         type="button"
         :aria-label="passwordVisible ? 'Hide password' : 'Show password'"

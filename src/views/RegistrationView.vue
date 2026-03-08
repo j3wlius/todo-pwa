@@ -1,10 +1,19 @@
 <script setup>
+import { ref } from 'vue'
 import { Form } from 'vee-validate'
 import EmailInput from '@/components/ui/EmailInput.vue'
 import PasswordInput from '@/components/ui/PasswordInput.vue'
 import TextInputField from '@/components/ui/TextInputField.vue'
 
+const formData = ref({
+  firstName: '',
+  lastName: '',
+  userEmail: '',
+  PasswordInput: '',
+})
+
 function handleSubmit() {
+  console.log(formData)
   console.log('Submitted!')
 }
 </script>
@@ -14,7 +23,7 @@ function handleSubmit() {
     <div class="form-wrapper">
       <Form class="registration-form" @submit="handleSubmit">
         <div class="form-copy">
-          <p class="eyebrow">Todo PWA</p>
+          <p class="eyebrow">Todo APP</p>
           <h1>Sign up to create your tasks</h1>
           <p class="supporting-text">Create your account and start organizing your day.</p>
         </div>
@@ -24,8 +33,9 @@ function handleSubmit() {
             <TextInputField
               label="First Name"
               id="firstName"
-              isRequired="true"
+              :isRequired="true"
               fieldName="firstName"
+              v-model="formData.firstName"
             />
           </div>
 
@@ -33,15 +43,16 @@ function handleSubmit() {
             <TextInputField
               label="Last Name"
               id="lastName"
-              isRequired="true"
+              :isRequired="true"
               fieldName="lastName"
+              v-model="formData.lastName"
             />
           </div>
         </div>
 
-        <EmailInput />
+        <EmailInput v-model="formData.userEmail" />
 
-        <PasswordInput />
+        <PasswordInput v-model="formData.PasswordInput" />
 
         <button class="submit-button" type="submit">Create account</button>
         <p class="login-copy">
