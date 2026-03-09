@@ -10,7 +10,7 @@ const router = createRouter({
       requiresAuth: true,
     },
     {
-      path: '/sign-up',
+      path: '/register',
       name: 'Registration',
       component: () => import('@/views/RegistrationView.vue'),
     },
@@ -18,6 +18,11 @@ const router = createRouter({
       path: '/login',
       name: 'Login',
       component: () => import('@/views/LoginView.vue'),
+    },
+    {
+      path: '/reset-password',
+      name: 'Reset Password',
+      component: () => import('@/views/ResetPasswordView.vue'),
     },
     {
       path: '/:pathMatch(.*)*',
