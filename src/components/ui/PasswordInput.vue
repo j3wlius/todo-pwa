@@ -9,6 +9,10 @@ function togglePasswordVisibility() {
   passwordVisible.value = !passwordVisible.value
 }
 
+const props = defineProps({
+  minLength: Boolean,
+})
+
 const passwordFieldType = computed(() => (passwordVisible.value ? 'text' : 'password'))
 
 const model = defineModel({ type: String, default: '' })
@@ -18,7 +22,7 @@ function validatePassword(value) {
     return 'Password is required'
   }
 
-  if (value.length < 8) {
+  if (value.length < 8 && props.minLength) {
     return 'Password must be at least 8 characters.'
   }
 
@@ -35,6 +39,7 @@ function validatePassword(value) {
         :type="passwordFieldType"
         id="password"
         name="password"
+        minLength="minLength"
         :rules="validatePassword"
         v-model="model"
       />

@@ -6,7 +6,10 @@ import PasswordInput from '@/components/ui/PasswordInput.vue'
 import TextInputField from '@/components/ui/TextInputField.vue'
 
 import { supabase } from '@/api/supabase-config'
+import { useRouter } from 'vue-router'
+
 const isLoading = ref(false)
+const router = useRouter()
 
 const formData = ref({
   firstName: '',
@@ -37,7 +40,7 @@ async function handleSubmit() {
     const user = data.user
 
     if (user) {
-      const { error: profileError } = await supabase.from('profiles').insert({
+      const { error: profileError } = await supabase.from('user_profiles').insert({
         id: user.id,
         first_name: firstName,
         last_name: lastName,
@@ -45,6 +48,8 @@ async function handleSubmit() {
 
       if (profileError) throw profileError
     }
+
+    router.push('/')
   } catch (error) {
     console.error('Registration failed:', error)
     throw error
@@ -88,9 +93,9 @@ async function handleSubmit() {
 
         <EmailInput v-model="formData.userEmail" />
 
-        <passwordInput v-model="formData.passwordInput" />
+        <passwordInput v-model="formData.passwordInput" :minLength="true" />
 
-        <button class="submit-button" type="submit" >Create account</button>
+        <button class="submit-button" type="submit">Create account</button>
         <p class="login-copy">
           Already have an account?
           <RouterLink to="login">Login</RouterLink>
