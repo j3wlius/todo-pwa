@@ -5,16 +5,52 @@ import EmailInput from '@/components/ui/EmailInput.vue'
 import PasswordInput from '@/components/ui/PasswordInput.vue'
 import TextInputField from '@/components/ui/TextInputField.vue'
 
+import { supabase } from '@/api/supabase-config'
+const isLoading = ref(false)
+
 const formData = ref({
   firstName: '',
   lastName: '',
   userEmail: '',
-  PasswordInput: '',
+  passwordInput: '',
 })
 
-function handleSubmit() {
-  console.log(formData)
-  console.log('Submitted!')
+async function handleSubmit() {
+  isLoading.value = true
+
+  try {
+    const { firstName, lastName, userEmail, passwordInput } = formData.value
+
+    const { data, error } = await supabase.auth.signUp({
+      email: userEmail,
+      password: passwordInput,
+      options: {
+        data: {
+          first_name: firstName,
+          last_name: lastName,
+        },
+      },
+    })
+
+    if (error) throw error
+
+    const user = data.user
+
+    if (user) {
+      const { error: profileError } = await supabase.from('profiles').insert({
+        id: user.id,
+        first_name: firstName,
+        last_name: lastName,
+      })
+
+      if (profileError) throw profileError
+    }
+  } catch (error) {
+    console.error('Registration failed:', error)
+    throw error
+  } finally {
+    isLoading.value = false
+  }
 }
 </script>
 
@@ -52,9 +88,9 @@ function handleSubmit() {
 
         <EmailInput v-model="formData.userEmail" />
 
-        <PasswordInput v-model="formData.PasswordInput" />
+        <passwordInput v-model="formData.passwordInput" />
 
-        <button class="submit-button" type="submit">Create account</button>
+        <button class="submit-button" type="submit" >Create account</button>
         <p class="login-copy">
           Already have an account?
           <RouterLink to="login">Login</RouterLink>
